@@ -58,19 +58,13 @@ struct Node *leftRotate(struct Node *y)
     struct Node *x = y->right;
     struct Node *T = x->left; // NULL
 
-    y->left = x;
+    x->left = y;
     y->right = T;
 
     y->height = 1 + max(height(y->left), height(y->right));
     x->height = 1 + max(height(x->left), height(x->right));
     return x;
 }
-
-// 30 , 20 , 25
-
-insert(30, 25);
-
-root->left = leftRotate(20);
 
 struct Node *insert(struct Node *root, int key)
 {
@@ -127,10 +121,34 @@ void inorder(struct Node *root)
     }
 }
 
+void search(struct Node *root, int key)
+{
+    if (root == NULL)
+    {
+        printf("Node is not found\n");
+        return;
+    }
+
+    if (root->data == key)
+    {
+        printf("Node is found\n");
+        return;
+    }
+
+    if (key < root->data)
+    {
+        search(root->left, key);
+    }
+    else
+    {
+        search(root->right, key);
+    }
+}
+
 int main()
 {
     struct Node *root = NULL;
-    int choice, value;
+    int choice, value, key;
 
     while (1)
     {
@@ -161,6 +179,9 @@ int main()
             break;
 
         case 3:
+            printf("Enter The Key :");
+            scanf("%d", &key);
+            search(root, key);
 
             break;
 
